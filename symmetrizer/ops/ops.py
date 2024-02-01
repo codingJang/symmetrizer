@@ -52,6 +52,7 @@ def get_basis(size, group, new_size, space="equivariant"):
     # Unvectorize W
     w = np.reshape(vh[:rank, ...], indices)
     basis = torch.tensor(w.astype(np.float32), requires_grad=False)
+    # breakpoint()
     return basis, rank
 
 
@@ -60,7 +61,6 @@ def get_invariant_basis(size, group, new_size, space="equivariant"):
     Get invariant basis using invariant version of symmetrization algorithm
     """
     w = np.random.randn(*size)
-
     # If space = random, do not symmetrize (only project)
     if group is not None and space != "random":
         w = symmetrize_invariant_out(w, group)
@@ -71,6 +71,7 @@ def get_invariant_basis(size, group, new_size, space="equivariant"):
     # Get basis
     __, s, vh = np.linalg.svd(wvec)
     rank = np.linalg.matrix_rank(wvec)
+    # breakpoint()
 
     if space=="nullspace":
         # If nullspace, remove the first r=rank vectors

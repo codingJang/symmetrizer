@@ -59,7 +59,7 @@ class BasisLinear(BasisLayer):
     Group-equivariant linear layer
     """
     def __init__(self, channels_in, channels_out, group, bias=True,
-                 n_samples=4096, basis="equivariant", gain_type="xavier",
+                 n_samples=256, basis="equivariant", gain_type="xavier",
                  bias_init=False):
         """
         """
@@ -116,7 +116,7 @@ class BasisConv2d(BasisConvolutionalLayer):
     Convolutional layer for groups
     """
     def __init__(self, channels_in, channels_out, group, filter_size=(3,3),
-                 bias=True, n_samples=4096, gain_type="he",
+                 bias=True, n_samples=128, gain_type="he",
                  basis="equivariant", stride=1, padding=0, first_layer=False):
         super().__init__()
         self.group = group
