@@ -2,6 +2,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 import numpy as np
+import math
 
 from symmetrizer.groups.groups import MatrixRepresentation
 from symmetrizer.ops.ops import get_basis, get_coeffs, get_invariant_basis, \
@@ -59,7 +60,7 @@ class BasisLinear(BasisLayer):
     Group-equivariant linear layer
     """
     def __init__(self, channels_in, channels_out, group, bias=True,
-                 n_samples=256, basis="equivariant", gain_type="xavier",
+                 const=2.0, basis="equivariant", gain_type="xavier",
                  bias_init=False):
         """
         """
@@ -71,6 +72,16 @@ class BasisLinear(BasisLayer):
         self.repr_size_out = group.repr_size_out
         self.channels_in = channels_in
         self.channels_out = channels_out
+        num_param_weight = channels_out * channels_in * self.repr_size_out * self.repr_size_in
+        # print(channels_in, channels_out, self.repr_size_in, self.repr_size_out,
+        #          const, basis, gain_type,
+        #          bias_init)
+        # breakpoint()
+        n_samples = math.ceil(const * num_param_weight / len(group.parameters))
+        # n_samples = 1
+        breakpoint()
+        # print(n_samples)
+        # breakpoint()
 
         ### Getting Basis ###
         size = (n_samples, self.repr_size_out, self.repr_size_in)
@@ -116,7 +127,7 @@ class BasisConv2d(BasisConvolutionalLayer):
     Convolutional layer for groups
     """
     def __init__(self, channels_in, channels_out, group, filter_size=(3,3),
-                 bias=True, n_samples=128, gain_type="he",
+                 bias=True, n_samples=256, gain_type="he",
                  basis="equivariant", stride=1, padding=0, first_layer=False):
         super().__init__()
         self.group = group
