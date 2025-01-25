@@ -1,1 +1,1 @@
-from .cartpole_networks import *
+from .cartpole_networks import BasisCartpoleNetwork
