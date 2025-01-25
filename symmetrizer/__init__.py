@@ -1,3 +1,3 @@
-import groups
-import nn
-import ops
+from . import groups
+from . import nn
+from . import ops
