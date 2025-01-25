@@ -1,1 +1,3 @@
-from .cartpole_networks import BasisCartpoleNetwork
+from .cartpole_networks import *
+from .grid_networks import *
+from .modules import *
